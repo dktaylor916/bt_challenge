@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Create and style clusters</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+<style>
+#legend {
+  position: absolute;
+  bottom: 20px;
+  left: 5px;
+
+  padding: 10px;
+  border-radius: 4px;
+  opacity: 1;
+}
+.mapboxgl-popup-content {
+  font-family: Futura;
+}
+.legend-gradient {
+  height: 15px;
+  width: 150px;
+  background-image: linear-gradient(
+    to right,
+    #440154,
+#472c7c,
+#3b528b, 
+#21908d,
+#28ae80,
+ #5dc963,
+ #d8ff61,
+  #fde725,
+ #fdfd5d
+  );
+}
+
+.legend-labels {
+  font-family: Futura;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.legend-title {
+  font-size: 15px;
+  font-family: Futura;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.legend-min,
+.legend-max {
+  font-size: 9px;
+}
+#legend1 {
+  position: absolute;
+  bottom: 20px;
+  left: 5px;
+
+  padding: 10px;
+  border-radius: 4px;
+  opacity: 0;
+}
+
+.legend-gradient1 {
+  height: 15px;
+  width: 150px;
+  background-image: linear-gradient(
+    to right,
+    #1c1cd7,
+          #63b0fd,
+          #ffffc0,
+          #1a9641,
+          #013220
+  );
+}
+
+.legend-labels1 {
+  font-family: Futura;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.legend-title1 {
+  font-size: 15px;
+  font-family: Futura;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.legend-min1,
+.legend-max1 {
+  font-size: 9px;
+}
+.no-highlight {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-text-select: none;
+  -webkit-user-select: none;
+}
+body { margin: 0; padding: 0; }
+#texty{position: absolute; font-family: Futura; top:60px;left:5px}
+#texty1{position: absolute; font-family: Futura; top:100px;left:5px }
+#date-head {position: absolute; right: 30px;top: 5px; ; height: 50px; ;font-size: 3.8vw; font-family: Futura; }
+#time-head {position: absolute; right: 30px;top: 60px; ; height: 50px; ;font-size: 3.8vw; font-family: Futura; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+#sel{ position: absolute; left: 5px;top: 5px; width: 10%; height: 50px; background: #fff;font-size: .9em; font-family: Futura; }
+#slider-date { position: absolute; top: 60px; width: 15%; height: 50px; background: #fff;left:5px }
+#slider-hour { position: absolute; top: 100px; width: 15%; height: 50px; background: #fff;left:5px  }
+#but { position: absolute; right: 10px; bottom: 30px;font-family: Futura;  }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<text id="date-head">Monday, May 1, 2023</text>
+<text id="time-head">00:00</text>
+<select id="sel" name="sel">
+  <option value="tv">Total Visitors</option>
+  <option value="vp">Vistor Percentage</option>
+</select>
+<div>
+  <text id="texty" top="50px">Day</text>
+  <input type='range' id='slider-hour' min='0' max='23' step='1' value='0'>
+</div>
+<div>
+  <text id="texty1" top="50px">Hour</text>
+  <input type='range' id='slider-date' min='1' max='21' step='1' value='0'>
+</div>
+     <button id="but">Toggle Map</button>
+      <div id="legend" class="no-highlight">
+       
+      <div class="legend-title"
+       >
+       Total Visitors
+      </div>
+        <div class="legend-gradient"></div>
+        <div class="legend-labels">
+          <span class="legend-min">1K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;20K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;35K&nbsp;&nbsp;&nbsp;&nbsp;60K</span>
+          
+        </div>
+      </div>
+    </div>
+    <div id="legend1" class="no-highlight">
+     
+    <div class="legend-title1"
+     >
+     Visitor Percentage
+    </div>
+      <div class="legend-gradient1"></div>
+      <div class="legend-labels1">
+        <span class="legend-min1">0%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;50%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100%</span>
+        
+      </div>
+    </div>
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoiZGt0YXlidyIsImEiOiJjbDlkenBvODMwa2twM3hvZ293bWVpaml1In0._QB63ZC3km-uev6mJkmacg';
+  
+    const map = new mapboxgl.Map({
+      
+        container: 'map',
+        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+        style: 'mapbox://styles/mapbox/light-v11',
+        center: [-2.928088,53.400300],
+        zoom: 11
+    });
+    let hoveredPolygonId = null;
+    map.on('load', () => {
+        var date 
+        var hour 
+        // Add a new source from our GeoJSON data and
+        // set the 'cluster' option to true. GL-JS will
+        // add the point_count property to your source data.
+        map.addSource('liv', {
+
+            type: 'geojson',
+            data: 'final_v4.geojson',
+            promoteId:'id'
+            
+        });
+
+        map.addLayer({
+            id: 'data',
+            type: 'fill',
+            source: 'liv',
+            paint: {
+          'fill-color': [
+            'interpolate',
+            ['linear'],
+            ['get', 'd1_h0_tv'],
+            10.0, '#440154',
+  1000.0, '#472c7c',
+  1500, '#3b528b', 
+  3000,'#21908d',
+  6000,'#28ae80',
+  12000,'#5dc963',
+  20000,'#d8ff61',
+  35000.0, '#fde725',
+  60000.0, '#fdfd5d'
+          ],
+          
+          'fill-opacity': 0.75,
+          'fill-opacity-transition': { duration: 500 } // 500 milliseconds = 1/2 seconds
+        }
+        });
+        map.addLayer({
+            id: 'line',
+            type: 'line',
+            source: 'liv',
+            paint: {
+          'line-color': 'white',
+          'line-width': .2,
+          'line-opacity': .7
+        },
+    
+
+        })
+
+
+   
+        var sliderDate = document.getElementById('slider-date');
+        var sliderHour = document.getElementById('slider-hour');
+        var select = document.getElementById('sel')
+
+      
+      select.addEventListener('input', function(e) {
+        console.log(e.target.value)
+        updateChoropleth(document.getElementById('slider-date').value,document.getElementById('slider-hour').value)
+      });
+
+      sliderHour.addEventListener('input', function(e) {
+        console.log(e.target.value)
+        selectedColumnIndex = parseInt(e.target.value);
+        var hour = selectedColumnIndex
+        updateChoropleth(document.getElementById('slider-date').value,hour)
+        if(selectedColumnIndex < 10){
+        document.getElementById('time-head').innerHTML = '0'+String(selectedColumnIndex)+':00'}
+        if(selectedColumnIndex >= 10){
+          document.getElementById('time-head').innerHTML = String(selectedColumnIndex)+':00'
+        }
+      });
+      sliderDate.addEventListener('input', function(e) {
+        console.log(e.target.value)
+        selectedColumnIndex = parseInt(e.target.value);
+        var date = selectedColumnIndex
+        updateChoropleth(date,document.getElementById('slider-hour').value)
+        const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+        const d = new Date('May ' + String(selectedColumnIndex) + ', 2023');
+        let day = weekday[d.getDay()];
+
+        document.getElementById('date-head').innerHTML = day+', May ' + String(selectedColumnIndex) + ', 2023'
+      });
+      var button = document.getElementById("but")
+button.addEventListener('click', function() {
+  if(map.getPaintProperty('data','fill-opacity') == 0){
+    map.setPaintProperty('data','fill-opacity',0.75)
+    map.setPaintProperty('line','line-color','white')
+  }
+  else{
+    map.setPaintProperty('data','fill-opacity',0)
+    map.setPaintProperty('line','line-color','black')
+  }
+  }
+  )
+  
+      map.setPaintProperty('data','fill-opacity-transition',{ duration: 500 } )
+
+      function updateChoropleth(date,hour) {
+        
+        if (document.getElementById('sel').value == 'vp'){
+          document.getElementById("legend").style.opacity = "0";
+          document.getElementById("legend1").style.opacity = "1";
+        
+        map.setPaintProperty('data', 'fill-color', [
+          'interpolate',
+          ['linear'],
+          ['get', 'd'+String(date)+'_h'+String(hour)+'_vp'],
+          0,'#1c1cd7',
+          25,'#63b0fd',
+          50,'#ffffc0',
+          75,'#1a9641',
+          100, '#013220'
+        ])};
+
+        if (document.getElementById('sel').value == 'tv'){
+          document.getElementById("legend").style.opacity = "1";
+          document.getElementById("legend1").style.opacity = "0";
+          map.setPaintProperty('data', 'fill-color', [
+  'interpolate',
+  ['linear'],
+  ['get', 'd' + String(date) + '_h' + String(hour) + '_tv'],
+ 10.0, '#440154',
+  1000.0, '#472c7c',
+  1500, '#3b528b', 
+  3000,'#21908d',
+  6000,'#28ae80',
+  12000,'#5dc963',
+  20000,'#d8ff61',
+  35000.0, '#fde725',
+  60000.0, '#fdfd5d'
+]);
+        }
+      }  
+
+
+map.on('click', 'data', (e) => {
+var d= document.getElementById('slider-date').value
+var h = document.getElementById('slider-hour').value
+var s = document.getElementById('sel').value
+console.log(e.features[0].properties.lsoa11cd)
+console.log('d'+String(d)+'_h'+String(h)+'_'+s)
+console.log(e.features[0].properties['d'+String(d)+'_h'+String(h)+'_'+s])
+console.log(e.lngLat.lat)
+if (document.getElementById('sel').value == 'tv'){
+var description = '<b>'+e.features[0].properties.lsoa11cd + '</b> <br>' + 'Total Visitors: ' + e.features[0].properties['d'+String(d)+'_h'+String(h)+'_'+s]}
+
+if (document.getElementById('sel').value == 'vp'){
+  var description =  '<b>'+e.features[0].properties.lsoa11cd + '</b> <br>' + '% Visitor: ' + e.features[0].properties['d'+String(d)+'_h'+String(h)+'_'+s]}
+
+
+new mapboxgl.Popup()
+.setLngLat([e.lngLat.lng,e.lngLat.lat])
+.setHTML(description)
+.addTo(map);
+}); 
+
+
+
+
+    });
+
+
+
+</script>
+
+</body>
+</html>
