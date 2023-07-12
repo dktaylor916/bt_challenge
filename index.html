@@ -317,15 +317,15 @@ map.on('click', 'data', (e) => {
 var d= document.getElementById('slider-date').value
 var h = document.getElementById('slider-hour').value
 var s = document.getElementById('sel').value
-console.log(e.features[0].properties.lsoa11cd)
+console.log(e.features[0].properties.LSOA21CD)
 console.log('d'+String(d)+'_h'+String(h)+'_'+s)
 console.log(e.features[0].properties['d'+String(d)+'_h'+String(h)+'_'+s])
 console.log(e.lngLat.lat)
 if (document.getElementById('sel').value == 'tv'){
-var description = '<b>'+e.features[0].properties.lsoa11cd + '</b> <br>' + 'Total Visitors: ' + e.features[0].properties['d'+String(d)+'_h'+String(h)+'_'+s]}
+var description = '<b>'+e.features[0].properties.LSOA21CD + '</b> <br>' + 'Total Visitors: ' + e.features[0].properties['d'+String(d)+'_h'+String(h)+'_'+s]}
 
 if (document.getElementById('sel').value == 'vp'){
-  var description =  '<b>'+e.features[0].properties.lsoa11cd + '</b> <br>' + '% Visitor: ' + e.features[0].properties['d'+String(d)+'_h'+String(h)+'_'+s]}
+  var description =  '<b>'+e.features[0].properties.LSOA21CD + '</b> <br>' + '% Visitor: ' + e.features[0].properties['d'+String(d)+'_h'+String(h)+'_'+s]}
 
 
 new mapboxgl.Popup()
