@@ -322,10 +322,10 @@ console.log('d'+String(d)+'_h'+String(h)+'_'+s)
 console.log(e.features[0].properties['d'+String(d)+'_h'+String(h)+'_'+s])
 console.log(e.lngLat.lat)
 if (document.getElementById('sel').value == 'tv'){
-var description = '<b>'+e.features[0].properties.LSOA21CD + '</b> <br>' + 'Total Visitors: ' + e.features[0].properties['d'+String(d)+'_h'+String(h)+'_'+s]}
+var description = '<b>'+e.features[0].properties.LSOA21CD + '</b> <br>' + 'Total Visitors: ' + e.features[0].properties['d'+String(d)+'_h'+String(h)+'_'+s] + '<br>' + '% Visitor: ' + e.features[0].properties['d'+String(d)+'_h'+String(h)+'_vp']}
 
 if (document.getElementById('sel').value == 'vp'){
-  var description =  '<b>'+e.features[0].properties.LSOA21CD + '</b> <br>' + '% Visitor: ' + e.features[0].properties['d'+String(d)+'_h'+String(h)+'_'+s]}
+  var description =  '<b>'+e.features[0].properties.LSOA21CD + '</b> <br>' + '% Visitor: ' + e.features[0].properties['d'+String(d)+'_h'+String(h)+'_'+s]+ '<br>' + 'Total Visitors: ' + e.features[0].properties['d'+String(d)+'_h'+String(h)+'_tv']}
 
 
 new mapboxgl.Popup()
