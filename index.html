@@ -144,7 +144,7 @@ body { margin: 0; padding: 0; }
       </div>
         <div class="legend-gradient"></div>
         <div class="legend-labels">
-          <span class="legend-min">1K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;20K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;35K&nbsp;&nbsp;&nbsp;&nbsp;60K</span>
+          <span class="legend-min">0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;30K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;50K</span>
           
         </div>
       </div>
@@ -197,14 +197,14 @@ body { margin: 0; padding: 0; }
             'interpolate',
             ['linear'],
             ['get', 'd1_h0_tv'],
-            10.0, '#440154',
-  1000.0, '#472c7c',
-  1500, '#3b528b', 
-  3000,'#21908d',
-  6000,'#28ae80',
-  12000,'#5dc963',
-  20000,'#d8ff61',
-  35000.0, '#fde725',
+            0, '#440154',
+  500, '#472c7c',
+  1000, '#3b528b', 
+  2500,'#21908d',
+  5000,'#28ae80',
+  10000,'#5dc963',
+  15000,'#d8ff61',
+  30000.0, '#fde725',
   60000.0, '#fdfd5d'
           ],
           
@@ -299,14 +299,14 @@ button.addEventListener('click', function() {
   'interpolate',
   ['linear'],
   ['get', 'd' + String(date) + '_h' + String(hour) + '_tv'],
- 10.0, '#440154',
-  1000.0, '#472c7c',
-  1500, '#3b528b', 
-  3000,'#21908d',
-  6000,'#28ae80',
-  12000,'#5dc963',
-  20000,'#d8ff61',
-  35000.0, '#fde725',
+ 0, '#440154',
+  500, '#472c7c',
+  1000, '#3b528b', 
+  2500,'#21908d',
+  5000,'#28ae80',
+  10000,'#5dc963',
+  15000,'#d8ff61',
+  30000.0, '#fde725',
   60000.0, '#fdfd5d'
 ]);
         }
