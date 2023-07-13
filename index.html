@@ -122,14 +122,14 @@ body { margin: 0; padding: 0; }
 <body>
 <div id="map"></div>
 <text id="date-head">Monday, May 1, 2023</text>
-<text id="time-head">00:00</text>
+<text id="time-head">12:00</text>
 <select id="sel" name="sel">
   <option value="tv">Total Visitors</option>
   <option value="vp">Vistor Percentage</option>
 </select>
 <div>
   <text id="texty" top="50px">Day</text>
-  <input type='range' id='slider-hour' min='0' max='23' step='1' value='0'>
+  <input type='range' id='slider-hour' min='0' max='23' step='1' value='12'>
 </div>
 <div>
   <text id="texty1" top="50px">Hour</text>
@@ -196,7 +196,7 @@ body { margin: 0; padding: 0; }
           'fill-color': [
             'interpolate',
             ['linear'],
-            ['get', 'd1_h0_tv'],
+            ['get', 'd1_h12_tv'],
             0, '#440154',
   500, '#472c7c',
   1000, '#3b528b', 
